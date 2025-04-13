@@ -54,7 +54,7 @@ class AndroidGameController(
             aiPlayer = null
         }
 
-        val gameState = gameLogic.gameState
+        val gameState = gameLogic.gameState;
         gameState.updatePlayers(playerX, playerO)
         gameState.reset()
     }
@@ -62,7 +62,6 @@ class AndroidGameController(
     fun getGameLogic(): GameLogic = gameLogic
 
     fun makeMove(row: Int, col: Int) {
-        println("row, col: $row, $col" );
         if (gameLogic.makeMove(row, col)) {
             // Nếu đến lượt AI và game vẫn đang chơi
             if (aiPlayer != null &&
@@ -71,7 +70,7 @@ class AndroidGameController(
 
                 // Tạo độ trễ nhỏ trước khi AI đánh
                 scope.launch(Dispatchers.Default) {
-                    delay(500) // 500ms delay
+//                    delay(500) // 500ms delay
 
                     val aiMove = aiPlayer?.makeMove(gameLogic.gameState.board)
                     if (aiMove != null) {
@@ -97,6 +96,10 @@ class AndroidGameController(
     }
 
     override fun onGameOver(state: GameState.State) {
+        // Sẽ được UI cập nhật xử lý
+    }
+
+    override fun onTimeOut(player: Player) {
         // Sẽ được UI cập nhật xử lý
     }
 }

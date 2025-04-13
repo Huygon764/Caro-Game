@@ -29,6 +29,11 @@ public class Board {
         return false;
     }
 
+    public boolean resetCellValue(int row, int col) {
+        cells[row][col] = 0;
+        return true;
+    }
+
     public boolean isCellEmpty(int row, int col) {
         return isValidPosition(row, col) && cells[row][col] == 0;
     }

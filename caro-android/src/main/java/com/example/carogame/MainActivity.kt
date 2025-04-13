@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             CaroGameTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     GameScreen(
-                        boardSize = 5,
+                        boardSize = 10,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

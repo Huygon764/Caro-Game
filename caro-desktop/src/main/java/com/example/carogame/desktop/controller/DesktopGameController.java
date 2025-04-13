@@ -29,10 +29,7 @@ public class DesktopGameController implements GameEventListener {
             aiPlayer = null;
         }
 
-//        GameState gameState = new GameState(settings.getBoardSize(), playerX, playerO);
-//        gameLogic.setGameState(gameState);
         gameLogic = new GameLogic(settings.getBoardSize(), playerX, playerO);
-//        System.out.println("switch state: " + this);
         gameLogic.addListener(this);
     }
 
@@ -62,41 +59,25 @@ public class DesktopGameController implements GameEventListener {
 
     public void makeMove(int row, int col) {
         if (gameLogic.makeMove(row, col)) {
-//            System.out.println("Desktop controller: Player " + gameLogic.getGameState().getCurrentPlayer().getId() + " makes a move at (" + row + ", " + col + ")");
             // Nếu đến lượt AI và game vẫn đang chơi
             if (aiPlayer != null &&
                     gameLogic.getGameState().getCurrentPlayer().isAI() &&
                     gameLogic.getGameState().getState() == GameState.State.PLAYING) {
 
                 AIPlayer.Move aiMove = aiPlayer.makeMove(gameLogic.getGameState().getBoard());
-                System.out.println("AI move: " + aiMove.row + ", " + aiMove.col);
                 if (aiMove != null) {
                     gameLogic.makeMove(aiMove.row, aiMove.col);
                 }
             }
         }
     }
-//public void makeMove(int row, int col) {
-//    // Nếu đây là lượt của người chơi (không phải AI)
-//    if (!gameLogic.getGameState().getCurrentPlayer().isAI()) {
-//        if (gameLogic.makeMove(row, col)) {
-//            // Nếu sau nước đi của người chơi, đến lượt AI và game vẫn đang chơi
-//            if (aiPlayer != null &&
-//                    gameLogic.getGameState().getCurrentPlayer().isAI() &&
-//                    gameLogic.getGameState().getState() == GameState.State.PLAYING) {
-//
-//                AIPlayer.Move aiMove = aiPlayer.makeMove(gameLogic.getGameState().getBoard());
-//                if (aiMove != null) {
-//                    gameLogic.makeMove(aiMove.row, aiMove.col);
-//                }
-//            }
-//        }
-//    }
-//    // Không cho phép người chơi đánh khi đến lượt AI
-//}
 
     public void startNewGame() {
         gameLogic.startNewGame();
+    }
+
+    public void setTimerLogic() {
+        gameLogic.getGameState().startTimer();
     }
 
     @Override
@@ -112,5 +93,10 @@ public class DesktopGameController implements GameEventListener {
     @Override
     public void onGameOver(GameState.State state) {
         // Sẽ được UI cập nhật xử lý
+    }
+
+    @Override
+    public void onTimeOut(Player player) {
+
     }
 }
